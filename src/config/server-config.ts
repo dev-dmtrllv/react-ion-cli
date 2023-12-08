@@ -6,12 +6,14 @@ import Path from "path";
 import { Configuration } from "webpack";
 import { createServerEntryPath } from "../generators/server-entry";
 import { createApiEntryPath } from "../generators/api-entry";
+import { createEnvEntryPath } from "../generators/env";
 
 export const createServerConfig = (projectPath: string, config: Config, isDev: boolean = false): Configuration =>
 {
 	return ({
 		name: "server",
 		entry: [
+			createEnvEntryPath(),
 			createApiEntryPath(),
 			createServerEntryPath()
 		],

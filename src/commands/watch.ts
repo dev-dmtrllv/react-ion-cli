@@ -1,4 +1,5 @@
 import Path from "path";
+import fs from "fs";
 import { Command } from "../Command";
 import { Project } from "../Project";
 import { serverEntry } from "../generators/server-entry";
@@ -11,6 +12,9 @@ import { ChildProcess, fork } from "child_process";
 import { pageApiEntry } from "../generators/page-api-entry";
 import { watch } from "fs";
 import { generateIonDefinitions } from "../generators/ion-def";
+import { envEntry } from "../generators/env";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 export default class Watch extends Command
 {
@@ -35,16 +39,15 @@ export default class Watch extends Command
 
 		const path = this.path;
 
-		const project = Project.get(path);
+		const project = Project.get(path, true);
 
 		const cwd = Path.resolve(path, project.config.output.dir);
 
 		const generateAll = () => Promise.all([
-			// generateGlobal.generate(project),
 			pageApiEntry.generate(project),
 			apiEntry.generate(project),
 			serverEntry.generate(project),
-			// generateEnv(project),
+			envEntry.generate(project),
 			generateIonDefinitions(project)
 		]);
 
@@ -53,6 +56,16 @@ export default class Watch extends Command
 		let compiledStatus: boolean[] = [];
 
 		let isStarting = false;
+
+		const httpServer = createServer();
+		const io = new Server(httpServer, {
+			cors: {
+				origin: "*",
+				methods: ["GET", "POST"],
+			}
+		});
+
+		httpServer.listen(81);
 
 		const start = async () => 
 		{
@@ -76,10 +89,24 @@ export default class Watch extends Command
 				}
 			}
 
+			const envFile = fs.readFileSync(Path.resolve(project.path, ".env"), "utf-8");
+			const env: Record<string, string> = { ...process.env, NODE_ENV: "development" };
+			envFile.split("\n").forEach(line => 
+			{
+				line = line.trim();
+				if (!line.startsWith("#"))
+				{
+					const [key = "", val = ""] = line.split("=");
+					if (key)
+						env[key.trim()] = val.trim();
+				}
+			});
+
 			console.log(`${restart ? "Restarting" : "Starting"} server`);
-			this.proc = fork(Path.resolve(cwd, "server.bundle.js"), { cwd, stdio: "inherit", env: { ...process.env, NODE_ENV: "development" } });
+			this.proc = fork(Path.resolve(cwd, "server.bundle.js"), { cwd, stdio: "inherit", env });
 			isStarting = false;
-		}
+			io.emit("reload-client");
+		};
 
 		const onServerCompiled = (index: number) => async () =>
 		{
@@ -104,7 +131,7 @@ export default class Watch extends Command
 		{
 			if (watchers.length)
 				console.log("Restarting webpack...");
-			
+
 			await Promise.all(watchers.map(w => new Promise<void>((res) => w.close(() => res()))));
 
 			watchers = [];
@@ -132,7 +159,8 @@ export default class Watch extends Command
 
 		watch(Path.resolve(project.path, ".env"), {}, () => 
 		{
-			generateIonDefinitions(project)
+			generateIonDefinitions(project);
+			start();
 		});
 	}
 }

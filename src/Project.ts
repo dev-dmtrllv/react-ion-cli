@@ -16,7 +16,7 @@ export namespace Project
 		return false;
 	};
 
-	export const get = (path: string): Project =>
+	export const get = (path: string, isDev: boolean): Project =>
 	{
 		if (!exists(path))
 			throw new Error(`No project found at ${path}!`);
@@ -52,7 +52,8 @@ export namespace Project
 						setTimeout(() => { isChanging = false; }, 100);
 					}
 				}, 100)
-			})
+			}),
+			isDev
 		};
 
 		return proj as Project;
@@ -71,4 +72,5 @@ export type Project = {
 	readonly path: string;
 	readonly config: Config;
 	readonly watch: (callback: () => any) => void;
+	readonly isDev: boolean;
 };
