@@ -28,6 +28,14 @@ export const generateIonDefinitions = (project: Project) =>
 
 	const data = fs.readFileSync(env, "utf-8").split("\n").filter(s => !!s.trim() && !s.trim().startsWith("#")).map(s => s.split("=")[0]);
 
+	const defineModule = (ext: string) => 
+	{
+		return `declare module "*.${ext}" {
+	const data: any;
+	export default data;
+}`;
+	}
+
 	fs.writeFileSync(envDecl, `// AUTO GENERATED
 ${apiImport}
 declare global {
@@ -39,5 +47,14 @@ declare global {
 		}
 	}
 }
+
+${defineModule("css")}
+${defineModule("scss")}
+${defineModule("sass")}
+
+${defineModule("png")}
+${defineModule("jpg")}
+${defineModule("jpeg")}
+
 export {}`, "utf-8");
 }
