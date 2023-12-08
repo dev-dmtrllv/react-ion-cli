@@ -1,0 +1,49 @@
+{
+    "name": "@asciist/cli",
+    "version": "0.0.1",
+    "main": "dist/index.js",
+    "scripts": {
+        "watch": "concurrently npm:watch-*",
+        "watch-ts": "tsc --watch",
+        "watch-dist": "nodemon --watch dist --exec \"npm pack .\"",
+        "build": "tsc"
+    },
+    "author": "Dimitri Lilov",
+    "license": "MIT",
+    "bin": {
+        "ion": "./dist/index.js",
+        "asciist": "./dist/index.js"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "template"
+    ],
+    "peerDependencies": {
+        "cross-env": "^7.0.3",
+        "mini-css-extract-plugin": "^2.7.6",
+        "path-browserify": "^1.0.1",
+        "ts-loader": "^9.5.1",
+        "tsconfig-paths-webpack-plugin": "^4.1.0",
+        "typescript": "^5.3.2",
+        "webpack": "^5.89.0",
+        "webpack-node-externals": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.2",
+        "@types/webpack": "^5.28.5",
+        "@types/webpack-node-externals": "^3.0.4",
+        "concurrently": "^8.2.2",
+        "nodemon": "^3.0.2"
+    },
+    "dependencies": {
+        "cross-env": "^7.0.3",
+        "mini-css-extract-plugin": "^2.7.6",
+        "path-browserify": "^1.0.1",
+        "ts-loader": "^9.5.1",
+        "tsconfig-paths-webpack-plugin": "^4.1.0",
+        "typescript": "^5.3.2",
+        "webpack": "^5.89.0",
+        "webpack-node-externals": "^3.0.0"
+    }
+}

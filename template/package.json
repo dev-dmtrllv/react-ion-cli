@@ -1,0 +1,16 @@
+{
+	"version": "0.0.1",
+	"main": "build/server.main.js",
+	"scripts": {
+		"start": "node .",
+		"watch": "ion watch",
+		"dev": "ion watch",
+		"build": "ion build"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@asciist/cli": "file:../cli/asciist-cli-0.0.1.tgz",
+		"@asciist/ion": "file:../ion/asciist-ion-0.0.1.tgz"
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"pages": {
+		"app": {
+			"path": "/",
+			"src": "./src/pages/app"
+		},
+		"admin": {
+			"path": "/admin",
+			"src": "./src/pages/admin"
+		}
+	},
+	"server": {
+		"api": {
+			"src": "./src/server/api",
+			"path": "/api"
+		},
+		"services": "./src/server/services",
+		"models": "./src/server/models",
+		"session": {
+			"resave": false,
+			"rolling": true,
+  			"saveUninitialized": true,
+  			"cookie": {
+				"maxAge": 86400000,
+				"httpOnly": true,
+				"path": "/"
+			}
+		}
+	}
+}
