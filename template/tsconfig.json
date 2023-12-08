@@ -9,13 +9,15 @@
 		"baseUrl": ".",
 		"paths": {
 			"~/*": [
-				"./*"
-			]
+				"./src/*"
+			],
 		},
 		"lib": [
 			"DOM",
 			"ESNext"
 		],
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 		"jsx": "react-jsx",
 		"allowSyntheticDefaultImports": true,
 		"alwaysStrict": true,
@@ -40,8 +42,7 @@
 		"noImplicitUseStrict": false,
 		"suppressExcessPropertyErrors": false,
 		"suppressImplicitAnyIndexErrors": false,
-		"noStrictGenericChecks": false,
-		"skipLibCheck": true
+		"noStrictGenericChecks": false
 	},
 	"exclude": [
 		"build"
