@@ -1,6 +1,6 @@
 {
-    "name": "@asciist/cli",
-    "version": "0.0.1",
+    "name": "@react-ion/cli",
+    "version": "0.1.0",
     "main": "dist/index.js",
     "scripts": {
         "watch": "concurrently npm:watch-*",

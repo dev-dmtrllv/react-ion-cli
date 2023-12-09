@@ -20,7 +20,7 @@ export const generateIonDefinitions = (project: Project) =>
 		}
 		else
 		{
-			apiImport = `import { Api } from "@asciist/ion/server";${EOL}`;
+			apiImport = `import { Api } from "@react-ion/ssr/server";${EOL}`;
 			const p = project.config.server.api.src.startsWith("./") ? project.config.server.api.src : `./${project.config.server.api.src}`;
 			apiString = `const api: Readonly<Api.Routes<typeof import("${p}").default>>;`;
 		}

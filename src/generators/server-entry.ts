@@ -8,7 +8,7 @@ export const createServerEntryPath = () => path.resolve(__dirname, "../../../../
 export const serverEntry = createGenerator(createServerEntryPath(), (project) => 
 {
 	const lines: string[] = [
-		`import { Server } from "@asciist/ion/server";${EOL}`,
+		`import { Server } from "@react-ion/ssr/server";${EOL}`,
 	];
 
 	const names: string[] = [];

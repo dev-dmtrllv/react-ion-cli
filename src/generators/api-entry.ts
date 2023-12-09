@@ -8,7 +8,7 @@ export const createApiEntryPath = () => path.resolve(__dirname, "../../../../.en
 export const apiEntry = createGenerator(createApiEntryPath(), (project) => 
 {
 	const lines: string[] = [
-		`import { Api } from "@asciist/ion/server";${EOL}`,
+		`import { Api } from "@react-ion/ssr/server";${EOL}`,
 	];
 
 	if(project.config.server.api)

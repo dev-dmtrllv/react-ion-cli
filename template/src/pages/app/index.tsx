@@ -1,12 +1,40 @@
-import { Html, Head, Body } from "@asciist/ion";
+import { Head, Body, Async } from "@react-ion/ssr";
+
+const Users = Async.create(api.users.get, ({ data, error, isLoading }) => 
+{
+	if (error)
+	{
+		console.error(error);
+		return null;
+	}
+
+	if(isLoading)
+	{
+		return <h1>Loading...</h1>;
+	}
+
+	return (
+		<>
+			{data.map(({ id, first_name, last_name, gender, address }) => (
+				<div key={id}>
+					<span>id: {id}</span>
+					<div>{first_name} {last_name} - {gender}</div>
+					<div>{address.city} {address.street_address}</div>
+					<hr />
+				</div>
+			))}
+		</>
+	);
+});
 
 export default () => (
-	<Html>
+	<html>
 		<Head>
-			<title>App</title>
+			<style />
 		</Head>
 		<Body>
-			<h1>Hello App!</h1>
+			<h1>Hi</h1>
+			<Users prefetch count={20} />
 		</Body>
-	</Html>
+	</html>
 );

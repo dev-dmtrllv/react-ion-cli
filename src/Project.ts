@@ -2,6 +2,7 @@ import fs from "fs";
 import Path from "path";
 
 import { Config } from "./Config";
+import { exec, run } from "./run";
 
 export namespace Project
 {
@@ -63,6 +64,16 @@ export namespace Project
 	{
 		console.log(`Creating project ${name} at ${path}`);
 		fs.cpSync(Path.resolve(__dirname, "../template"), path, { recursive: true });
+		const pkg = JSON.parse(fs.readFileSync(Path.resolve(__dirname, "../template/package.json"), "utf8"));
+		const cliVersion = (await exec("npm view @react-ion/cli version", path)).replace("\n", "");
+		const ssrVersion = (await exec("npm view @react-ion/ssr version", path)).replace("\n", "");
+		const utilsVersion = (await exec("npm view @react-ion/utils version", path)).replace("\n", "");
+		if (!pkg.dependencies)
+			pkg.dependencies = {};
+		pkg.dependencies["@react-ion/cli"] = `^${cliVersion}`;
+		pkg.dependencies["@react-ion/ssr"] = `^${ssrVersion}`;
+		pkg.dependencies["@react-ion/utils"] = `^${utilsVersion}`;
+		fs.writeFileSync(Path.resolve(path, "package.json"), JSON.stringify(pkg, null, 4), "utf-8");
 	};
 }
 

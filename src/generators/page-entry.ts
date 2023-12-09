@@ -22,7 +22,7 @@ export const generatePageEntry = (project: Project, page: string) =>
 		src = info.src.replace("/", "");
 
 	const lines: string[] = [
-		`import { render } from "@asciist/ion/client";`,
+		`import { render } from "@react-ion/ssr/client";`,
 		`import App from "../../../${src}";`,
 		...(project.isDev ? [
 			`import { io } from "socket.io-client";`,

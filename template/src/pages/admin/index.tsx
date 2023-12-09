@@ -1,12 +1,12 @@
-import { Html, Head, Body } from "@asciist/ion";
+import { Head, Body } from "@react-ion/ssr";
 
 export default () => (
-	<Html>
+	<html>
 		<Head>
 			<title>Admin</title>
 		</Head>
 		<Body>
 			<h1>Hello Admin!</h1>
 		</Body>
-	</Html>
+	</html>
 );

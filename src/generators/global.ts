@@ -18,7 +18,7 @@
 // 		}
 // 		else
 // 		{
-// 			lines.push(`import { Api } from "@asciist/ion/server";${EOL}`);
+// 			lines.push(`import { Api } from "@react-ion/ssr/server";${EOL}`);
 // 			globals.push(`const api: Readonly<Api.Routes<typeof import("${posixPath.join("../../..", project.config.server.api.src)}").default>>;`);
 // 		}
 // 	}
