@@ -22,7 +22,9 @@ export const generateIonDefinitions = (project: Project) =>
 		{
 			apiImport = `import { Api } from "@react-ion/ssr/server";${EOL}`;
 			const p = project.config.server.api.src.startsWith("./") ? project.config.server.api.src : `./${project.config.server.api.src}`;
-			apiString = `const api: Readonly<Api.Routes<typeof import("${p}").default>>;`;
+			apiString = `const api: Readonly<Api.Routes<typeof import("${p}").default>>;\n`;
+			apiString += `type _ApiRoutes = typeof api;\n`
+			apiString += `interface ApiRoutes extends _ApiRoutes {}\n`;
 		}
 	}
 

@@ -25,7 +25,7 @@ export const serverEntry = createGenerator(createServerEntryPath(), (project) =>
 		if(!fs.existsSync(path.resolve(project.path, project.config.server.api.src)))
 		{
 			console.log(`No server entry found at ${project.config.server.api.src}!`);
-			lines.push(`const _Api = undefined`);
+			lines.push(`// @ts-ignore\nconst _Api = undefined`);
 		}
 		else
 		{

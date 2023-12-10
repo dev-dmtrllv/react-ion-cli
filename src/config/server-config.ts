@@ -7,6 +7,7 @@ import { Configuration } from "webpack";
 import { createServerEntryPath } from "../generators/server-entry";
 import { createApiEntryPath } from "../generators/api-entry";
 import { createEnvEntryPath } from "../generators/env";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 export const createServerConfig = (projectPath: string, config: Config, isDev: boolean = false): Configuration =>
 {
@@ -34,7 +35,8 @@ export const createServerConfig = (projectPath: string, config: Config, isDev: b
 			]
 		},
 		plugins: [
-			createDefines(isDev, true, config)
+			createDefines(isDev, true, config),
+			new ForkTsCheckerWebpackPlugin()
 		],
 		module: {
 			rules: [
@@ -44,7 +46,8 @@ export const createServerConfig = (projectPath: string, config: Config, isDev: b
 					options: {
 						getCustomTransformers: (_program: any) => ({
 							before: [transformImports(projectPath)],
-						})
+						}),
+						transpileOnly: true
 					}
 				},
 				{

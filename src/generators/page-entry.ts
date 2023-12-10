@@ -22,6 +22,7 @@ export const generatePageEntry = (project: Project, page: string) =>
 		src = info.src.replace("/", "");
 
 	const lines: string[] = [
+		"// @ts-ignore",
 		`import { render } from "@react-ion/ssr/client";`,
 		`import App from "../../../${src}";`,
 		...(project.isDev ? [

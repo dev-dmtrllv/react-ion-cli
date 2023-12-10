@@ -4,7 +4,7 @@ import { Command } from "../Command";
 import { Project } from "../Project";
 import { serverEntry } from "../generators/server-entry";
 import { apiEntry } from "../generators/api-entry";
-import { Watching, webpack } from "webpack";
+import { Stats, Watching, webpack } from "webpack";
 import { createPageConfig } from "../config/page-config";
 import { createServerConfig } from "../config/server-config";
 import { generatePageEntry } from "../generators/page-entry";
@@ -108,8 +108,14 @@ export default class Watch extends Command
 			io.emit("reload-client");
 		};
 
-		const onServerCompiled = (index: number) => async () =>
+		const onServerCompiled = (index: number) => async (err: any, stats: Stats | undefined) =>
 		{
+			if(err)
+				console.error(err);
+
+			if(stats)
+				console.log(stats.toString("minimal"));
+			
 			compiledStatus[index] = true;
 			if (!compiledStatus.some(s => s === false))
 			{
@@ -117,8 +123,14 @@ export default class Watch extends Command
 			}
 		};
 
-		const onPageCompiled = (index: number) => async () =>
+		const onPageCompiled = (index: number) => async (err: any, stats: Stats | undefined) =>
 		{
+			if(err)
+				console.error(err);
+
+			if(stats)
+				console.log(stats.toString("minimal"));
+			
 			const didCompile = compiledStatus[index];
 			compiledStatus[index] = true;
 			if (!didCompile && !compiledStatus.some(s => s === false))

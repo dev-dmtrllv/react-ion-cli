@@ -21,7 +21,8 @@ export const apiEntry = createGenerator(createApiEntryPath(), (project) =>
 		else
 		{
 			lines.push(`import _Api from "../../../${project.config.server.api.src}";`);
-			lines.push("global.api = Api.parse(_Api);")
+			lines.push("// @ts-ignore\nglobal.__api_routes__ = _Api;");
+			lines.push("// @ts-ignore\nglobal.api = Api.parse(_Api);");
 		}
 	}
 	else

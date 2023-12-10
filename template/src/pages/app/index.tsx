@@ -30,10 +30,9 @@ const Users = Async.create(api.users.get, ({ data, error, isLoading }) =>
 export default () => (
 	<html>
 		<Head>
-			<style />
+			<title>App</title>
 		</Head>
 		<Body>
-			<h1>Hi</h1>
 			<Users prefetch count={20} />
 		</Body>
 	</html>

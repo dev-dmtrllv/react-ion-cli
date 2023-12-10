@@ -46,7 +46,8 @@ export const createPageConfig = (name: string, pagePath: string, projectPath: st
 					options: {
 						getCustomTransformers: (_program: any) => ({
 							before: [transformImports(projectPath)],
-						})
+						}),
+						transpileOnly: true
 					}
 				},
 				{

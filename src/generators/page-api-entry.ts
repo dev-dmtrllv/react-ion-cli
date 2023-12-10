@@ -5,14 +5,16 @@ export const createPageApiEntryPath = () => path.resolve(__dirname, "../../../..
 
 export const pageApiEntry = createGenerator(createPageApiEntryPath(), () => 
 {
-	return `const { paths, base } = window.__SSR_DATA__.apiInfo;
+	return `// @ts-ignore
+const { paths, base } = window.__SSR_DATA__.apiInfo;
+// @ts-ignore
 const api = window.api = {};
-paths.forEach((p) => 
+paths.forEach((p: string) => 
 {
 	const parts = p.replace(base, "").split("/").filter(s => !!s);
 	
-	let target = api;
-	parts.forEach(p => 
+	let target: any = api;
+	parts.forEach((p: any) => 
 	{
 		if (!target[p])
 			target[p] = {};
