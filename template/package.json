@@ -8,5 +8,9 @@
 		"build": "ion build"
 	},
 	"license": "ISC",
-	"dependencies": {}
+	"dependencies": {},
+	"devDependencies": {
+		"@types/react": "^18.2.43",
+		"@types/react-dom": "^18.2.17"
+	}
 }
