@@ -1,6 +1,6 @@
 {
     "name": "@react-ion/cli",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "main": "dist/index.js",
     "scripts": {
         "watch": "concurrently npm:watch-*",
@@ -11,13 +11,13 @@
     "author": "Dimitri Lilov",
     "license": "MIT",
     "bin": {
-        "ion": "./dist/index.js",
-        "asciist": "./dist/index.js"
+        "ion": "./dist/index.js"
     },
     "files": [
         "dist",
         "package.json",
-        "template"
+        "template",
+		"README.md"
     ],
     "peerDependencies": {
         "cross-env": "^7.0.3",

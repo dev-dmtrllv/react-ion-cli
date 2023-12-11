@@ -14,8 +14,6 @@
 			"src": "./src/server/api",
 			"path": "/api"
 		},
-		"services": "./src/server/services",
-		"models": "./src/server/models",
 		"session": {
 			"resave": false,
 			"rolling": true,

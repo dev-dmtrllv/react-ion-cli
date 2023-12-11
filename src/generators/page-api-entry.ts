@@ -23,7 +23,7 @@ paths.forEach((p: string) =>
 
 	["get", "post", "put", "delete"].forEach((m) => 
 	{
-		target[m] = Object.assign((data = {}) => fetch(p + (m === "get" ? \`?\${new URLSearchParams(data).toString()}\` : ""), {
+		target[m] = Object.assign((data = {}) => fetch(p + (m === "get" ? \`?\${new URLSearchParams({ data: JSON.stringify(data || {}) }).toString()}\` : ""), {
 			method: m.toUpperCase(),
 			body: m === "get" ? null : JSON.stringify(data),
 			headers: m === "get" ? {} : {
