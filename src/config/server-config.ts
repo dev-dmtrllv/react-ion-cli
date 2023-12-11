@@ -1,5 +1,5 @@
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
-import nodeExternals from "webpack-node-externals";
+// import nodeExternals from "webpack-node-externals";
 import { createDefines } from "./create-defines";
 import { transformImports } from "./import-transformer";
 import Path from "path";
@@ -27,7 +27,12 @@ export const createServerConfig = (projectPath: string, config: Config, isDev: b
 			path: Path.resolve(projectPath, config.output.dir),
 			publicPath: "/",
 		},
-		externals: [nodeExternals()],
+		externalsPresets: { node: true },
+		externals: [
+			{ express: 'commonjs express' },
+			"express",
+			"pg-native",
+		],
 		resolve: {
 			extensions: [".tsx", ".ts", ".jsx", ".js"],
 			plugins: [

@@ -2,7 +2,7 @@ import fs from "fs";
 import Path from "path";
 
 import { Config } from "./Config";
-import { exec, run } from "./run";
+import { exec } from "./run";
 
 export namespace Project
 {
@@ -68,11 +68,13 @@ export namespace Project
 		const cliVersion = (await exec("npm view @react-ion/cli version", path)).replace("\n", "");
 		const ssrVersion = (await exec("npm view @react-ion/ssr version", path)).replace("\n", "");
 		const utilsVersion = (await exec("npm view @react-ion/utils version", path)).replace("\n", "");
+		const viewsVersion = (await exec("npm view @react-ion/views version", path)).replace("\n", "");
 		if (!pkg.dependencies)
 			pkg.dependencies = {};
 		pkg.dependencies["@react-ion/cli"] = `^${cliVersion}`;
 		pkg.dependencies["@react-ion/ssr"] = `^${ssrVersion}`;
 		pkg.dependencies["@react-ion/utils"] = `^${utilsVersion}`;
+		pkg.dependencies["@react-ion/views"] = `^${viewsVersion}`;
 		fs.writeFileSync(Path.resolve(path, "package.json"), JSON.stringify(pkg, null, 4), "utf-8");
 	};
 }
