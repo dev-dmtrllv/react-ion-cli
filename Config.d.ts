@@ -24,8 +24,13 @@ type Config = {
                 path?: string;
             };
         };
+		database?: boolean;
     };
     output: {
         dir: string;
     };
+	resolve?: {
+		sources?: string[];
+		resources?: string[];
+	};
 };

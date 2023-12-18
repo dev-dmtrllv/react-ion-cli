@@ -65,10 +65,13 @@ export namespace Project
 		console.log(`Creating project ${name} at ${path}`);
 		fs.cpSync(Path.resolve(__dirname, "../template"), path, { recursive: true });
 		const pkg = JSON.parse(fs.readFileSync(Path.resolve(__dirname, "../template/package.json"), "utf8"));
+		pkg.name = name;
+		
 		const cliVersion = (await exec("npm view @react-ion/cli version", path)).replace("\n", "");
 		const ssrVersion = (await exec("npm view @react-ion/ssr version", path)).replace("\n", "");
 		const utilsVersion = (await exec("npm view @react-ion/utils version", path)).replace("\n", "");
 		const viewsVersion = (await exec("npm view @react-ion/views version", path)).replace("\n", "");
+		
 		if (!pkg.dependencies)
 			pkg.dependencies = {};
 		pkg.dependencies["@react-ion/cli"] = `^${cliVersion}`;

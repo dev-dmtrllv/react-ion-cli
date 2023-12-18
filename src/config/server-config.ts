@@ -11,6 +11,30 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 export const createServerConfig = (projectPath: string, config: Config, isDev: boolean = false): Configuration =>
 {
+	const { resources = [], sources = [] } = config.resolve || {};
+
+	const resourceModules = resources.map(ext => 
+	{
+		return {
+			test: new RegExp(`\\${ext}$`, "i"),
+			type: "asset/resource",
+			generator: {
+				emit: false
+			}
+		};
+	});
+
+	const sourceModules = sources.map(ext => 
+	{
+		return {
+			test: new RegExp(`\\${ext}$`, "i"),
+			type: "asset/source",
+			generator: {
+				emit: false
+			}
+		};
+	});
+
 	return ({
 		name: "server",
 		entry: [
@@ -65,7 +89,9 @@ export const createServerConfig = (projectPath: string, config: Config, isDev: b
 					generator: {
 						emit: false
 					}
-				}
+				},
+				...resourceModules,
+				...sourceModules
 			]
 		},
 		experiments: {

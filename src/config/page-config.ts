@@ -10,6 +10,30 @@ import { createPageApiEntryPath } from "../generators/page-api-entry";
 
 export const createPageConfig = (name: string, pagePath: string, projectPath: string, config: Config, isDev: boolean = false): Configuration =>
 {
+	const { resources = [], sources = [] } = config.resolve || {};
+
+	const resourceModules = resources.map(ext => 
+		{
+			return {
+				test: new RegExp(`\\${ext}$`, "i"),
+				type: "asset/resource",
+				generator: {
+					emit: false
+				}
+			};
+		});
+	
+		const sourceModules = sources.map(ext => 
+		{
+			return {
+				test: new RegExp(`\\${ext}$`, "i"),
+				type: "asset/source",
+				generator: {
+					emit: false
+				}
+			};
+		});
+
 	return {
 		name,
 		entry: {
@@ -61,7 +85,9 @@ export const createPageConfig = (name: string, pagePath: string, projectPath: st
 				{
 					test: /\.(jpg|jpeg|png|gif|woff|eot|ttf|svg)$/i,
 					type: "asset/resource"
-				}
+				},
+				...resourceModules,
+				...sourceModules
 			]
 		},
 		plugins: [
